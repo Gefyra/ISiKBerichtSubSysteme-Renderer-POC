@@ -192,8 +192,22 @@
         <artifactId>dependency-check-maven</artifactId>
         <version>9.0.7</version>
         <configuration>
-          <format>HTML</format>
+          <formats>
+            <format>HTML</format>
+            <format>JSON</format>
+          </formats>
           <outputDirectory>target</outputDirectory>
+          <skipProvidedScope>true</skipProvidedScope>
+          <skipRuntimeScope>false</skipRuntimeScope>
+          <skipSystemScope>true</skipSystemScope>
+          <skipTestScope>true</skipTestScope>
+          <!-- CI-friendly settings -->
+          <failBuildOnCVSS>8</failBuildOnCVSS>
+          <nvdApiDelay>4000</nvdApiDelay>
+          <nvdMaxRetryCount>2</nvdMaxRetryCount>
+          <!-- Try to update, but don't fail if it doesn't work -->
+          <autoUpdate>true</autoUpdate>
+          <cveValidForHours>24</cveValidForHours>
         </configuration>
       </plugin>
     </plugins>
