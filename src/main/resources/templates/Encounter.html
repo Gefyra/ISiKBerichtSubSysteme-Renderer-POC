@@ -1,0 +1,94 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <h2>Encounter</h2>
+  
+  <!-- Identifier -->
+  <div th:if="${resource.hasIdentifier() and !resource.identifier.empty}">
+    <strong>Fallnummer:</strong>
+    <span th:each="identifier : ${resource.identifier}">
+      <span th:text="${identifier.hasValue() ? identifier.value : 'N/A'}">Identifier</span>
+      <span th:if="${identifier.hasSystem()}" th:text="' (' + ${identifier.system} + ')'"></span>
+    </span>
+  </div>
+  
+  <!-- Status -->
+  <div>
+    <strong>Status:</strong>
+    <span th:text="${resource.status != null ? resource.status.toCode() : 'unknown'}">unknown</span>
+  </div>
+  
+  <!-- Class -->
+  <div th:if="${resource.hasClass_() and resource.class_ != null}">
+    <strong>Kontaktart:</strong>
+    <span th:text="${resource.class_.hasDisplay() ? resource.class_.display : resource.class_.code}">Class</span>
+  </div>
+  
+  <!-- Type -->
+  <div th:if="${resource.hasType() and !resource.type.empty}">
+    <strong>Typ:</strong>
+    <ul>
+      <li th:each="type : ${resource.type}">
+        <span th:if="${type.hasCoding() and !type.coding.empty}">
+          <span th:each="coding : ${type.coding}">
+            <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Type</span>
+            <span th:if="${coding.hasSystem()}" th:text="' (' + ${coding.system} + ')'"></span>
+          </span>
+        </span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Service Type -->
+  <div th:if="${resource.hasServiceType() and resource.serviceType.hasCoding()}">
+    <strong>Abteilung:</strong>
+    <span th:each="coding : ${resource.serviceType.coding}">
+      <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Service Type</span>
+      <span th:if="${coding.hasCode()}" th:text="' (Code: ' + ${coding.code} + ')'"></span>
+    </span>
+  </div>
+  
+  <!-- Service Provider -->
+  <div th:if="${resource.hasServiceProvider() and resource.serviceProvider.hasDisplay()}">
+    <strong>Einrichtung:</strong>
+    <span th:text="${resource.serviceProvider.display}">Service Provider</span>
+  </div>
+  
+  <!-- Subject -->
+  <div th:if="${resource.hasSubject() and resource.subject.hasReference()}">
+    <strong>Patient:</strong>
+    <span th:text="${resource.subject.reference}">Patient Reference</span>
+  </div>
+  
+  <!-- Period -->
+  <div th:if="${resource.hasPeriod() and resource.period != null}">
+    <strong>Zeitraum:</strong>
+    <span th:if="${resource.period.hasStart()}" th:text="${#dates.format(resource.period.start, 'dd.MM.yyyy HH:mm')}">start</span>
+    <span th:if="${resource.period.hasEnd()}">
+      - <span th:text="${#dates.format(resource.period.end, 'dd.MM.yyyy HH:mm')}">end</span>
+    </span>
+    <span th:if="${resource.period.hasStart() and !resource.period.hasEnd()}"> (laufend)</span>
+  </div>
+  
+  <!-- Diagnosis -->
+  <div th:if="${resource.hasDiagnosis() and !resource.diagnosis.empty}">
+    <strong>Diagnosen:</strong>
+    <ul>
+      <li th:each="diagnosis : ${resource.diagnosis}">
+        <span th:if="${diagnosis.hasCondition() and diagnosis.condition.hasDisplay()}" th:text="${diagnosis.condition.display}">Diagnosis</span>
+        <span th:if="${diagnosis.hasCondition() and diagnosis.condition.hasReference() and !diagnosis.condition.hasDisplay()}" th:text="${diagnosis.condition.reference}">Reference</span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Reason -->
+  <div th:if="${resource.hasReasonCode() and !resource.reasonCode.empty}">
+    <strong>Grund:</strong>
+    <ul>
+      <li th:each="reason : ${resource.reasonCode}">
+        <span th:if="${reason.hasCoding() and !reason.coding.empty}">
+          <span th:each="coding : ${reason.coding}" th:text="${coding.hasDisplay() ? coding.display : coding.code}">Reason</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+

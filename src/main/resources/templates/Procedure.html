@@ -1,0 +1,112 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <h3>Prozedur</h3>
+  
+  <!-- Display identifier -->
+  <div th:if="${resource.hasIdentifier() and !resource.identifier.empty}">
+    <strong>Prozedur-ID:</strong>
+    <ul>
+      <li th:each="identifier : ${resource.identifier}">
+        <span th:text="${identifier.hasValue() ? identifier.value : 'N/A'}">Value</span>
+        <span th:if="${identifier.hasSystem()}" th:text="' (' + ${identifier.system} + ')'"></span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Display the procedure code/type -->
+  <div th:if="${resource.code != null and resource.code.hasCoding()}">
+    <strong>Typ:</strong>
+    <ul>
+      <li th:each="coding : ${resource.code.coding}">
+        <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Code</span>
+        <span th:if="${coding.hasSystem()}" th:text="' (' + ${coding.system} + ')'"></span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Display status -->
+  <div th:if="${resource.hasStatus()}">
+    <strong>Status:</strong> 
+    <span th:text="${resource.status}">Status</span>
+  </div>
+  
+  <!-- Display category -->
+  <div th:if="${resource.hasCategory()}">
+    <strong>Kategorie:</strong>
+    <span th:if="${resource.category.hasCoding()}">
+      <ul>
+        <li th:each="coding : ${resource.category.coding}">
+          <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Category</span>
+          <span th:if="${coding.hasSystem()}" th:text="' (' + ${coding.system} + ')'"></span>
+        </li>
+      </ul>
+    </span>
+  </div>
+  
+  <!-- Display subject reference if available -->
+  <div th:if="${resource.hasSubject()}">
+    <strong>Patient:</strong> 
+    <span th:if="${resource.subject.hasDisplay()}" th:text="${resource.subject.display}">Subject Display</span>
+    <span th:if="${!resource.subject.hasDisplay() and resource.subject.hasReference()}" th:text="${resource.subject.reference}">Subject Reference</span>
+  </div>
+  
+  <!-- Display encounter reference -->
+  <div th:if="${resource.hasEncounter() and resource.encounter.hasReference()}">
+    <strong>Fall:</strong>
+    <span th:text="${resource.encounter.reference}">Encounter Reference</span>
+  </div>
+  
+  <!-- Display performed period -->
+  <div th:if="${resource.hasPerformed() and resource.performed != null and resource.performed.class.simpleName == 'Period'}">
+    <strong>Durchführungszeitraum:</strong> 
+    <span th:if="${resource.performed.hasStart()}" th:text="${#dates.format(resource.performed.start, 'dd.MM.yyyy HH:mm')}">Start</span>
+    <span th:if="${resource.performed.hasEnd()}"> - <span th:text="${#dates.format(resource.performed.end, 'dd.MM.yyyy HH:mm')}">End</span></span>
+    <span th:if="${resource.performed.hasStart() and !resource.performed.hasEnd()}"> (laufend)</span>
+  </div>
+  
+  <!-- Display performed date/time -->
+  <div th:if="${resource.hasPerformed() and resource.performed != null and resource.performed.class.simpleName == 'DateTimeType'}">
+    <strong>Durchführung:</strong> 
+    <span th:text="${#dates.format(resource.performed.value, 'dd.MM.yyyy HH:mm')}">DateTime</span>
+  </div>
+  
+  <!-- Display performed string -->
+  <div th:if="${resource.hasPerformed() and resource.performed != null and resource.performed.class.simpleName == 'StringType'}">
+    <strong>Durchführung:</strong> 
+    <span th:text="${resource.performed.value}">String</span>
+  </div>
+  
+  <!-- Display location -->
+  <div th:if="${resource.hasLocation() and resource.location.hasDisplay()}">
+    <strong>Ort:</strong>
+    <span th:text="${resource.location.display}">Location</span>
+  </div>
+  
+  <!-- Display reason code -->
+  <div th:if="${resource.hasReasonCode() and !resource.reasonCode.empty}">
+    <strong>Grund:</strong>
+    <ul>
+      <li th:each="reason : ${resource.reasonCode}">
+        <span th:if="${reason.hasCoding() and !reason.coding.empty}">
+          <span th:each="coding : ${reason.coding}" th:text="${coding.hasDisplay() ? coding.display : coding.code}">Reason</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Display outcome -->
+  <div th:if="${resource.hasOutcome() and resource.outcome.hasCoding()}">
+    <strong>Ergebnis:</strong>
+    <span th:each="coding : ${resource.outcome.coding}" th:text="${coding.hasDisplay() ? coding.display : coding.code}">Outcome</span>
+  </div>
+  
+  <!-- Display performer -->
+  <div th:if="${resource.hasPerformer() and !resource.performer.empty}">
+    <strong>Durchführende:</strong>
+    <ul>
+      <li th:each="performer : ${resource.performer}">
+        <span th:if="${performer.hasActor() and performer.actor.hasDisplay()}" th:text="${performer.actor.display}">Performer</span>
+        <span th:if="${performer.hasActor() and !performer.actor.hasDisplay() and performer.actor.hasReference()}" th:text="${performer.actor.reference}">Reference</span>
+      </li>
+    </ul>
+  </div>
+</div>

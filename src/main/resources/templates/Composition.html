@@ -1,0 +1,55 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <h2 th:text="${resource.title != null ? resource.title : 'Composition'}">Composition</h2>
+  
+  <!-- Identifier -->
+  <div th:if="${resource.hasIdentifier()}">
+    <strong>Dokument-ID:</strong>
+    <span th:text="${resource.identifier.hasValue() ? resource.identifier.value : 'N/A'}">Identifier</span>
+    <span th:if="${resource.identifier.hasSystem()}" th:text="' (' + ${resource.identifier.system} + ')'"></span>
+  </div>
+  
+  <!-- Status -->
+  <div>
+    <strong>Status:</strong>
+    <span th:text="${resource.status != null ? resource.status.toCode() : 'unknown'}">unknown</span>
+  </div>
+  
+  <!-- Type -->
+  <div th:if="${resource.hasType() and resource.type.hasCoding() and !resource.type.coding.empty}">
+    <strong>Dokumenttyp:</strong>
+    <span th:each="coding : ${resource.type.coding}">
+      <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Type</span>
+      <span th:if="${coding.hasSystem()}" th:text="' (' + ${coding.system} + ')'"></span>
+    </span>
+  </div>
+  
+  <!-- Date -->
+  <div>
+    <strong>Erstellt am:</strong>
+    <span th:text="${resource.dateElement != null ? #dates.format(resource.dateElement.value, 'dd.MM.yyyy HH:mm') : 'Datum nicht verfügbar'}">YYYY-MM-DD</span>
+  </div>
+  
+  <!-- Author -->
+  <div th:if="${resource.hasAuthor() and !resource.author.empty}">
+    <strong>Autor:</strong>
+    <ul>
+      <li th:each="author : ${resource.author}">
+        <span th:if="${author.hasDisplay()}" th:text="${author.display}">Author</span>
+        <span th:if="${!author.hasDisplay() and author.hasReference()}" th:text="${author.reference}">Reference</span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Subject -->
+  <div th:if="${resource.hasSubject() and resource.subject.hasReference()}">
+    <strong>Patient:</strong>
+    <span th:text="${resource.subject.reference}">Subject Reference</span>
+  </div>
+  
+  <!-- Encounter -->
+  <div th:if="${resource.hasEncounter() and resource.encounter.hasReference()}">
+    <strong>Fall:</strong>
+    <span th:text="${resource.encounter.reference}">Encounter Reference</span>
+  </div>
+</div>
+

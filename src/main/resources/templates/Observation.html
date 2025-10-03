@@ -1,0 +1,112 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <h3>Observation</h3>
+  
+  <!-- Display the observation code/type -->
+  <div th:if="${resource.code != null and resource.code.hasCoding()}">
+    <strong>Typ:</strong>
+    <span th:each="coding : ${resource.code.coding}">
+      <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Code</span>
+      <span th:if="${coding.hasSystem()}" th:text="' (' + ${coding.system} + ')'"></span>
+    </span>
+  </div>
+  
+  <!-- Display status -->
+  <div th:if="${resource.hasStatus()}">
+    <strong>Status:</strong> 
+    <span th:text="${resource.status != null ? resource.status.toString() : 'UNKNOWN'}">Status</span>
+  </div>
+  
+  <!-- Display category -->
+  <div th:if="${resource.hasCategory() and !resource.category.empty}">
+    <strong>Kategorie:</strong>
+    <ul>
+      <li th:each="category : ${resource.category}">
+        <span th:if="${category.hasCoding() and !category.coding.empty}">
+          <span th:each="coding : ${category.coding}">
+            <span th:text="${coding.hasDisplay() ? coding.display : coding.code}">Category</span>
+            <span th:if="${coding.hasSystem()}" th:text="' (' + ${coding.system} + ')'"></span>
+          </span>
+        </span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Display subject -->
+  <div th:if="${resource.hasSubject() and resource.subject.hasReference()}">
+    <strong>Patient:</strong>
+    <span th:text="${resource.subject.reference}">Subject</span>
+  </div>
+  
+  <!-- Display effective date/time -->
+  <div th:if="${resource.hasEffective() and resource.effective != null}">
+    <strong>Zeitpunkt:</strong> 
+    <span th:text="${resource.effective.valueAsString != null ? resource.effective.valueAsString : 'Datum nicht verfügbar'}">DateTime</span>
+  </div>
+  
+  <!-- Display simple value -->
+  <div th:if="${resource.hasValueQuantity()}">
+    <strong>Wert:</strong> 
+    <span th:text="${resource.valueQuantity.value}">Value</span>
+    <span th:text="${resource.valueQuantity.hasUnit() ? resource.valueQuantity.unit : resource.valueQuantity.code}">Unit</span>
+  </div>
+  
+  <!-- Display components (for multi-component observations like blood pressure) -->
+  <div th:if="${resource.hasComponent() and !resource.component.empty}">
+    <strong>Messwerte:</strong>
+    <table style="border-collapse: collapse; width: 100%;">
+      <thead>
+        <tr style="background-color: #f2f2f2;">
+          <th style="border: 1px solid #ddd; padding: 8px;">Parameter</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Wert</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Einheit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="comp : ${resource.component}">
+          <td style="border: 1px solid #ddd; padding: 8px;">
+            <span th:if="${comp.hasCode() and comp.code.hasCoding() and !comp.code.coding.empty}">
+              <!-- Handle specific LOINC codes for blood pressure -->
+              <th:block th:switch="${comp.code.coding[0].code}">
+                <span th:case="'8480-6'">Systolisch</span>
+                <span th:case="'8462-4'">Diastolisch</span>
+                <span th:case="'8478-0'">Mittlerer arterieller Druck</span>
+                <span th:case="*" th:text="${comp.code.coding[0].hasDisplay() ? comp.code.coding[0].display : comp.code.coding[0].code}">Messwert</span>
+              </th:block>
+            </span>
+            <span th:if="${!comp.hasCode() or !comp.code.hasCoding() or comp.code.coding.empty}">Messwert</span>
+          </td>
+          <td style="border: 1px solid #ddd; padding: 8px;">
+            <span th:if="${comp.hasValueQuantity()}" th:text="${comp.valueQuantity.value}">Value</span>
+            <span th:if="${!comp.hasValueQuantity()}">Kein Wert</span>
+          </td>
+          <td style="border: 1px solid #ddd; padding: 8px;">
+            <span th:if="${comp.hasValueQuantity()}" th:text="${comp.valueQuantity.hasUnit() ? comp.valueQuantity.unit : comp.valueQuantity.code}">Unit</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Display partOf reference for observations that are part of procedures -->
+  <div th:if="${resource.hasPartOf() and !resource.partOf.empty}">
+    <strong>Teil von:</strong>
+    <ul>
+      <li th:each="partOf : ${resource.partOf}">
+        <span th:text="${partOf.hasReference() ? partOf.reference : 'N/A'}">Reference</span>
+        <span th:if="${partOf.hasDisplay()}" th:text="' (' + ${partOf.display} + ')'"></span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Display interpretation -->
+  <div th:if="${resource.hasInterpretation() and !resource.interpretation.empty}">
+    <strong>Interpretation:</strong>
+    <ul>
+      <li th:each="interpretation : ${resource.interpretation}">
+        <span th:if="${interpretation.hasCoding() and !interpretation.coding.empty}">
+          <span th:each="coding : ${interpretation.coding}" th:text="${coding.hasDisplay() ? coding.display : coding.code}">Interpretation</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

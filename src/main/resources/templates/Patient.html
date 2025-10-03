@@ -1,0 +1,75 @@
+<div xmlns="http://www.w3.org/1999/xhtml">
+  <h3>Patient</h3>
+  
+  <!-- Patient ID -->
+  <div th:if="${resource.id != null}">
+    <strong>ID:</strong> 
+    <span th:text="${resource.getResourceType().name() + '/' + resource.id}">Patient/ID</span>
+  </div>
+  
+  <!-- Identifier -->
+  <div th:if="${resource.hasIdentifier() and !resource.identifier.empty}">
+    <strong>Patienten-Identifikator:</strong>
+    <ul>
+      <li th:each="identifier : ${resource.identifier}">
+        <span th:if="${identifier.hasType() and identifier.type.hasCoding() and !identifier.type.coding.empty}">
+          <span th:text="${identifier.type.coding[0].hasDisplay() ? identifier.type.coding[0].display : identifier.type.coding[0].code}">Type</span>:
+        </span>
+        <span th:text="${identifier.hasValue() ? identifier.value : 'N/A'}">Value</span>
+        <span th:if="${identifier.hasSystem()}" th:text="' (' + ${identifier.system} + ')'"></span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Name using HAPI's approach for R4 -->
+  <div th:unless="${#lists.isEmpty(resource.name)}">
+    <strong>Name:</strong> 
+    <span th:with="humanName=${resource.name[0]}">
+      <th:block th:each="prefix : ${humanName.prefix}" th:if="${!prefix.empty}" th:text="${prefix.value} + ' '">Dr</th:block>
+      <th:block th:each="givenName : ${humanName.given}" th:if="${!givenName.empty}" th:text="${givenName.value} + ' '">John</th:block>
+      <b th:if="${!humanName.familyElement.empty}" th:text="${#strings.toUpperCase(humanName.family)} + ' '">SMITH</b>
+      <th:block th:each="suffix : ${humanName.suffix}" th:if="${!suffix.empty}" th:text="${suffix.value} + ' '">Jr</th:block>
+    </span>
+  </div>
+  <div th:if="${#lists.isEmpty(resource.name)}">
+    <strong>Name:</strong> Nicht verfügbar
+  </div>
+  
+  <!-- Gender -->
+  <div>
+    <strong>Geschlecht:</strong>
+    <span th:text="${resource.hasGender() and resource.gender != null ? resource.gender.toCode() : 'unbekannt'}">Geschlecht</span>
+  </div>
+  
+  <!-- Birth date using HAPI's date formatting -->
+  <div th:if="${resource.hasBirthDate()}">
+    <strong>Geburtsdatum:</strong>
+    <span th:text="${resource.birthDateElement != null ? #dates.format(resource.birthDateElement.value,'dd.MM.yyyy') : 'nicht verfügbar'}">Geburtsdatum</span>
+  </div>
+  
+  <!-- Address -->
+  <div th:if="${resource.hasAddress() and !resource.address.empty}">
+    <strong>Adresse:</strong>
+    <div th:each="address : ${resource.address}">
+      <div th:if="${address.hasLine() and !address.line.empty}">
+        <span th:each="line : ${address.line}" th:text="${line.value}">Street</span>
+      </div>
+      <div>
+        <span th:if="${address.hasPostalCode()}" th:text="${address.postalCode}">ZIP</span>
+        <span th:if="${address.hasCity()}" th:text="' ' + ${address.city}">City</span>
+        <span th:if="${address.hasCountry()}" th:text="', ' + ${address.country}">Country</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Contact -->
+  <div th:if="${resource.hasTelecom() and !resource.telecom.empty}">
+    <strong>Kontakt:</strong>
+    <ul>
+      <li th:each="telecom : ${resource.telecom}">
+        <span th:text="${telecom.hasSystem() ? telecom.system.toCode() : 'Kontakt'}">System</span>:
+        <span th:text="${telecom.hasValue() ? telecom.value : 'N/A'}">Value</span>
+      </li>
+    </ul>
+  </div>
+</div>
