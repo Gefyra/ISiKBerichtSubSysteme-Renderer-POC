@@ -1,5 +1,10 @@
 # FHIR Narrative Generator
 
+[![CI Build](https://github.com/patrickwerner/NarrativeGenerator/actions/workflows/ci.yml/badge.svg)](https://github.com/patrickwerner/NarrativeGenerator/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://openjdk.java.net/)
+[![HAPI FHIR](https://img.shields.io/badge/HAPI%20FHIR-8.4.0-blue.svg)](https://hapifhir.io/)
+
 A Java application for generating human-readable narratives from FHIR R4 resources, with specialized support for ISiK (Informationstechnische Systeme in Krankenhäusern) Bericht Bundles.
 
 ## Features
@@ -365,3 +370,32 @@ Output (XHTML snippet):
   <p><strong>Geburtsdatum:</strong> 1970-01-01</p>
   </div>
 ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
+1. Clone the repository
+2. Ensure you have Java 17+ and Maven 3.8+
+3. Run tests: `mvn test`
+4. Build: `mvn clean package`
+
+### Code Quality
+
+- CI runs on every push and pull request
+- Code coverage reports are generated with JaCoCo
+- Security scanning with OWASP Dependency Check
+- Automated dependency updates via Dependabot
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [HAPI FHIR](https://hapifhir.io/) for the excellent FHIR library
+- [Thymeleaf](https://www.thymeleaf.org/) for the template engine
+- [PicoCLI](https://picocli.info/) for the command-line interface
+- [ISiK](https://simplifier.net/isik) for German healthcare interoperability standards

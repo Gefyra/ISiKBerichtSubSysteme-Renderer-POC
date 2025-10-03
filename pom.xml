@@ -7,6 +7,33 @@
   <groupId>eu.molit.fhir</groupId>
   <artifactId>NarrativeGenerator</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>FHIR Narrative Generator</name>
+  <description>A professional CLI tool for generating FHIR narratives with support for ISiK Bundle processing</description>
+  <url>https://github.com/patrickwerner/NarrativeGenerator</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>patrickwerner</id>
+      <name>Patrick Werner</name>
+      <email>patrick.werner@example.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/patrickwerner/NarrativeGenerator.git</connection>
+    <developerConnection>scm:git:ssh://github.com:patrickwerner/NarrativeGenerator.git</developerConnection>
+    <url>https://github.com/patrickwerner/NarrativeGenerator/tree/main</url>
+  </scm>
 
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
@@ -133,6 +160,34 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>9.0.7</version>
+        <configuration>
+          <format>HTML</format>
+          <outputDirectory>target</outputDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>

@@ -36,3 +36,22 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Security and Build Reports ###
+dependency-check-report.html
+dependency-check-report.json
+dependency-check-report.xml
+
+### Coverage Reports ###
+*.exec
+*.coverage
+coverage/
+
+### Logs ###
+*.log
+logs/
+
+### Temporary Files ###
+*.tmp
+*.temp
+.cache/
