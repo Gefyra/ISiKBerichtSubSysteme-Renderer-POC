@@ -11,7 +11,7 @@
 
   <name>FHIR Narrative Generator</name>
   <description>A professional CLI tool for generating FHIR narratives with support for ISiK Bundle processing</description>
-  <url>https://github.com/patrickwerner/NarrativeGenerator</url>
+  <url>https://github.com/Gefyra/ISiKBerichtSubSysteme-Renderer-POC</url>
 
   <licenses>
     <license>
@@ -30,9 +30,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/patrickwerner/NarrativeGenerator.git</connection>
-    <developerConnection>scm:git:ssh://github.com:patrickwerner/NarrativeGenerator.git</developerConnection>
-    <url>https://github.com/patrickwerner/NarrativeGenerator/tree/main</url>
+    <connection>scm:git:git://github.com/Gefyra/ISiKBerichtSubSysteme-Renderer-POC.git</connection>
+    <developerConnection>scm:git:ssh://github.com:Gefyra/ISiKBerichtSubSysteme-Renderer-POC.git</developerConnection>
+    <url>https://github.com/Gefyra/ISiKBerichtSubSysteme-Renderer-POC/tree/main</url>
   </scm>
 
   <properties>

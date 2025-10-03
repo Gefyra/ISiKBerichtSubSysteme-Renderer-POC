@@ -1,8 +1,8 @@
 # FHIR Narrative Generator
 
-[![CI Build](https://github.com/patrickwerner/NarrativeGenerator/actions/workflows/ci.yml/badge.svg)](https://github.com/patrickwerner/NarrativeGenerator/actions/workflows/ci.yml)
+[![CI Build](https://github.com/Gefyra/ISiKBerichtSubSysteme-Renderer-POC/actions/workflows/ci.yml/badge.svg)](https://github.com/Gefyra/ISiKBerichtSubSysteme-Renderer-POC/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://openjdk.java.net/)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.java.net/)
 [![HAPI FHIR](https://img.shields.io/badge/HAPI%20FHIR-8.4.0-blue.svg)](https://hapifhir.io/)
 
 A Java application for generating human-readable narratives from FHIR R4 resources, with specialized support for ISiK (Informationstechnische Systeme in Krankenhäusern) Bericht Bundles.
