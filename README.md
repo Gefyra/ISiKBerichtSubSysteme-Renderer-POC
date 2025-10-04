@@ -12,7 +12,7 @@ A Java application for generating human-readable narratives from FHIR R4 resourc
 - **FHIR R4 Narrative Generation**: Generate human-readable HTML narratives for FHIR resources
 - **ISiK Bundle Support**: Specialized processing for German healthcare interoperability standards
 - **Dual Interface**: Both traditional JAR execution and modern CLI using PicoCLI
-- **Multiple Output Modes**: Bundle narrative only, complete Bundle with narratives, or Bundle with section text
+- **Multiple Output Modes**: Complete Bundle with populated narratives, or Bundle with narratives transferred to section text
 - **Custom Templates**: Thymeleaf-based templates for different FHIR resource types
 - **German Healthcare Standards**: Proper handling of German characters and ISiK profiles
 
