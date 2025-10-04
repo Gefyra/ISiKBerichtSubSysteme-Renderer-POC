@@ -56,23 +56,29 @@
   </div>
   
   <!-- Display performed period -->
-  <div th:if="${resource.hasPerformed() and resource.performed != null and resource.performed.class.simpleName == 'Period'}">
-    <strong>Durchführungszeitraum:</strong> 
-    <span th:if="${resource.performed.hasStart()}" th:text="${#dates.format(resource.performed.start, 'dd.MM.yyyy HH:mm')}">Start</span>
-    <span th:if="${resource.performed.hasEnd()}"> - <span th:text="${#dates.format(resource.performed.end, 'dd.MM.yyyy HH:mm')}">End</span></span>
-    <span th:if="${resource.performed.hasStart() and !resource.performed.hasEnd()}"> (laufend)</span>
-  </div>
-  
-  <!-- Display performed date/time -->
-  <div th:if="${resource.hasPerformed() and resource.performed != null and resource.performed.class.simpleName == 'DateTimeType'}">
-    <strong>Durchführung:</strong> 
-    <span th:text="${#dates.format(resource.performed.value, 'dd.MM.yyyy HH:mm')}">DateTime</span>
-  </div>
-  
-  <!-- Display performed string -->
-  <div th:if="${resource.hasPerformed() and resource.performed != null and resource.performed.class.simpleName == 'StringType'}">
-    <strong>Durchführung:</strong> 
-    <span th:text="${resource.performed.value}">String</span>
+  <div th:if="${resource.hasPerformed() and resource.performed != null}" th:with="performedType=${resource.performed.fhirType()}">
+    <div th:if="${performedType == 'Period'}">
+      <strong>Durchführungszeitraum:</strong> 
+      <span th:with="period=${resource.performed}" th:if="${period.hasStart()}" 
+            th:text="${#dates.format(period.start, 'dd.MM.yyyy HH:mm')}">Start</span>
+      <span th:with="period=${resource.performed}" th:if="${period.hasEnd()}"> - 
+        <span th:text="${#dates.format(period.end, 'dd.MM.yyyy HH:mm')}">End</span>
+      </span>
+      <span th:with="period=${resource.performed}" 
+            th:if="${period.hasStart() and !period.hasEnd()}"> (laufend)</span>
+    </div>
+    
+    <!-- Display performed date/time -->
+    <div th:if="${performedType == 'dateTime'}">
+      <strong>Durchführung:</strong> 
+      <span th:text="${#dates.format(resource.performed.value, 'dd.MM.yyyy HH:mm')}">DateTime</span>
+    </div>
+    
+    <!-- Display performed string -->
+    <div th:if="${performedType == 'string'}">
+      <strong>Durchführung:</strong> 
+      <span th:text="${resource.performed.value}">String</span>
+    </div>
   </div>
   
   <!-- Display location -->
