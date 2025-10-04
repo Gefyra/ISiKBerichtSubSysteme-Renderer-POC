@@ -329,7 +329,7 @@ Produces `target/NarrativeGenerator-1.0-SNAPSHOT.jar` with `Main-Class` set.
   ```
 
 ### Programmatic wiring
-- Main entry: `src/main/java/eu/molit/fhir/narrative/Main.java`
+- Main entry: `src/main/java/de/gefyra/fhir/narrative/Main.java`
 - Uses:
   - `FhirContext.forR4()`
   - `CustomThymeleafNarrativeGenerator`
@@ -338,7 +338,7 @@ Produces `target/NarrativeGenerator-1.0-SNAPSHOT.jar` with `Main-Class` set.
   - `ctx.getNarrativeGenerator().generateResourceNarrative(ctx, resource)` → returns XHTML
 
 ### Testing
-- JUnit 5 test: `src/test/java/eu/molit/fhir/narrative/NarrativeGeneratorTest.java`
+- JUnit 5 test: `src/test/java/de/gefyra/fhir/narrative/NarrativeGeneratorTest.java`
 - Run tests: `mvn test`
 
 ### Configuration

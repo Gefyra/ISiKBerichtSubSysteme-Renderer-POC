@@ -1,4 +1,4 @@
-package eu.molit.fhir.narrative;
+package de.gefyra.fhir.narrative;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.narrative.CustomThymeleafNarrativeGenerator;

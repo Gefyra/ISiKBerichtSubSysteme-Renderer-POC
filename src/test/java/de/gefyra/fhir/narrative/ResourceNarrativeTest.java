@@ -1,4 +1,4 @@
-package eu.molit.fhir.narrative;
+package de.gefyra.fhir.narrative;
 
 import ca.uhn.fhir.context.FhirContext;
 import org.hl7.fhir.r4.model.*;
