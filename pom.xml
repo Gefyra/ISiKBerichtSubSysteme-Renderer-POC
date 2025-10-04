@@ -73,7 +73,7 @@
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>4.7.5</version>
+      <version>4.7.7</version>
     </dependency>
 
     <!-- UCUM library required by HAPI FHIRPath (R4) -->
