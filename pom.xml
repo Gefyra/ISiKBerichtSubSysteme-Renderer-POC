@@ -80,7 +80,7 @@
     <dependency>
       <groupId>org.fhir</groupId>
       <artifactId>ucum</artifactId>
-      <version>1.0.3</version>
+      <version>1.0.10</version>
     </dependency>
 
     <!-- HAPI cache provider (required by FHIRPath in 6.x) -->
