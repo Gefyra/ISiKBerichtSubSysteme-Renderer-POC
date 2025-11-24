@@ -38,7 +38,7 @@
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hapi.version>8.4.0</hapi.version>
+    <hapi.version>8.6.0</hapi.version>
   </properties>
 
   <dependencies>
